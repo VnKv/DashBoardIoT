@@ -11,6 +11,10 @@
 <body ng-app="sockets" ng-controller="socketsController">
   <h2>GRAPHICS</h2>
   <div>
+    <input type="text" ng-model="attacker.ip"></br>
+    <input type="text" ng-model="attacker.port"><button ng-click=sendAttack()>Send</button> </br>
+  </div>
+  <div>
   	<ul>
   		<li ng-repeat="arduino in arduino_elems">
           

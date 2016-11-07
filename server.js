@@ -26,14 +26,17 @@ io.on('connection', function(socket) {
         }
         printArduinos();
     });
+    socket.on('attacker',function(data){
+        console.log(data);
+    });
 });
 
 app.post('/', function (request, response) {
     console.log(request.body);
-    var delay = "";
+    var delay;
     var index = findArduino(request.body.id);
     if(index >= 0){
-        delay = arduinos[index].delay
+        delay = arduinos[index];
         arduinos.splice(index,1);   
         printArduinos();    
     }
@@ -44,8 +47,8 @@ app.post('/', function (request, response) {
     response.send(delay);
 });
 
-server.listen(process.env.PORT || 3001, function() {  
-    console.log('Servidor corriendo en http://localhost:3001');
+server.listen(3000, function() {  
+    console.log('Servidor corriendo en http://localhost:3000');
 });
 
 //Retorna la actualizacion para determinado arduino por id, si existe
