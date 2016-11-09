@@ -27,7 +27,9 @@ io.on('connection', function(socket) {
         printArduinos();
     });
     socket.on('attacker',function(data){
-        console.log(data);
+        var list_neighbours = getListNeighbours(data);
+        console.log(list_neighbours);
+        io.sockets.emit('arduinos', list_neighbours);
     });
 });
 
@@ -66,4 +68,18 @@ function printArduinos(){
     for (var i = arduinos.length - 1; i >= 0; i--) {
         console.log(arduinos[i].id + ": " + arduinos[i].delay);
     }
+}
+
+function getListNeighbours(data){
+    for (var i = data.arduinos.length - 1; i >= 0; i--) {
+        console.log(data.arduinos[i]);
+        delete data.arduinos[i]['sensors'];
+        delete data.arduinos[i]['delay'];
+        delete data.arduinos[i]['$$hashKey'];
+        console.log(data.arduinos[i]);
+    }
+    for (var i = data.servers.length - 1; i >= 0; i--) {
+        delete data.servers[i]['$$hashKey'];
+    }
+    return data;
 }

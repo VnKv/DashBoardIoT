@@ -11,14 +11,22 @@
 <body ng-app="sockets" ng-controller="socketsController">
   <h2>GRAPHICS</h2>
   <div>
-    <input type="text" ng-model="attacker.ip"></br>
-    <input type="text" ng-model="attacker.port"><button ng-click=sendAttack()>Send</button> </br>
+    <input type="text" ng-model="member.ip">
+    <input type="number" ng-model="member.port"> <button ng-click=addMember()>Add</button> </br>
+    <button ng-click="sendAttack()">Attack</button>
+  </div>
+  <div>
+    <ul>
+      <li ng-repeat="member in members">
+        {{member.ip}}  -  {{member.port}}
+      </li>
+    </ul>
   </div>
   <div>
   	<ul>
   		<li ng-repeat="arduino in arduino_elems">
           
-          ID = {{arduino.id}} </br>
+          ID = {{arduino.id}} - {{arduino.ip}}:{{arduino.port}}</br>
           
           <!-- Despliegue de datos (texto plano)-->
           <!--<span ng-repeat="sensor in arduino.sensors">

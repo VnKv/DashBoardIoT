@@ -2,7 +2,8 @@ var app = angular.module("sockets",[]);
 
 app.controller("socketsController",function($scope){
 	$scope.arduino_elems = [];
-	$scope.attacker = { ip: "", port: ""};
+	$scope.members = [];
+	$scope.member = { ip: "", port: ""};
 
 	var socket = io.connect('http://localhost:3000');
 	//Escucha al evento 'client' que sera llamado desde el servidor web
@@ -50,9 +51,22 @@ app.controller("socketsController",function($scope){
 		}
 	};
 
+	$scope.addMember = function(){
+		var member = {
+			ip: $scope.member.ip, 
+			port: $scope.member.port
+		}
+		console.log(member);
+		$scope.members.push(member);
+	}
+
 	$scope.sendAttack = function(){
-		console.log($scope.attacker);
-		socket.emit('attacker',$scope.attacker);
+		console.log($scope.members);
+		var data = {
+			servers: $scope.members,
+			arduinos: $scope.arduino_elems
+		};
+		socket.emit('attacker', data);
 	}
 
 	//Actualiza los valores de los sensores de un arduino en especifico
@@ -83,7 +97,10 @@ app.controller("socketsController",function($scope){
 		var arduino_elem = {
 			id: arduino.id,
 			sensors: buildSensors(arduino.datetime,arduino.data),
-			delay: '1000'
+			delay: '1000',
+			ip: arduino.ip,
+			port: arduino.port,
+			number_process: arduino.number_process
 		};
 
 		console.log(arduino_elem);
