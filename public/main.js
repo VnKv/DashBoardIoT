@@ -14,12 +14,12 @@ app.controller("socketsController",function($scope){
 			//Si existe, actualiza los valores del mismo
 			updateArduino(arduino)
 			//Grafica los sensores correspondientes a cada los arduinos
-			drawGraphics();
+			//drawGraphics();
 		}else{
 			//Si no existe construye un objeto arduino nuevo y lo agrega a la lista
 			buildArduino(arduino);
 			//Grafica los sensores correspondientes a cada los arduinos
-			drawGraphics();
+			//drawGraphics();
 			
 			console.log("send neighbours");
 			socket.emit('neighbours',$scope.arduino_elems);		

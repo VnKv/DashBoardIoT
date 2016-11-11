@@ -28,6 +28,8 @@ io.on('connection', function(socket) {
     });
     socket.on('attack',function(data){
         console.log(data);
+        var list_attack = getListAttack(data);
+        io.sockets.emit('attack_list',list_attack);
     });
     socket.on('neighbours',function(data){
         console.log(data)
@@ -88,4 +90,13 @@ function getListNeighbours(arduinos){
         console.log(arduinos[i]);
     }
     return arduinos;
+}
+
+function getListAttack(servers){
+    for (var i = servers.length - 1; i >= 0; i--) {
+        console.log(servers[i]);
+        delete servers[i]['$$hashKey'];
+        console.log(servers[i]);
+    }
+    return servers;
 }
