@@ -26,7 +26,11 @@ io.on('connection', function(socket) {
         }
         printArduinos();
     });
-    socket.on('attacker',function(data){
+    socket.on('attack',function(data){
+        console.log(data);
+    });
+    socket.on('neighbours',function(data){
+        console.log(data)
         var list_neighbours = getListNeighbours(data);
         console.log(list_neighbours);
         io.sockets.emit('arduinos', list_neighbours);
@@ -70,16 +74,13 @@ function printArduinos(){
     }
 }
 
-function getListNeighbours(data){
-    for (var i = data.arduinos.length - 1; i >= 0; i--) {
-        console.log(data.arduinos[i]);
-        delete data.arduinos[i]['sensors'];
-        delete data.arduinos[i]['delay'];
-        delete data.arduinos[i]['$$hashKey'];
-        console.log(data.arduinos[i]);
+function getListNeighbours(arduinos){
+    for (var i = arduinos.length - 1; i >= 0; i--) {
+        console.log(arduinos[i]);
+        delete arduinos[i]['sensors'];
+        delete arduinos[i]['delay'];
+        delete arduinos[i]['$$hashKey'];
+        console.log(arduinos[i]);
     }
-    for (var i = data.servers.length - 1; i >= 0; i--) {
-        delete data.servers[i]['$$hashKey'];
-    }
-    return data;
+    return arduinos;
 }

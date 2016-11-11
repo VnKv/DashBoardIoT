@@ -20,7 +20,9 @@ app.controller("socketsController",function($scope){
 			buildArduino(arduino);
 			//Grafica los sensores correspondientes a cada los arduinos
 			drawGraphics();
-		}
+			
+			console.log("send neighbours");
+			socket.emit('neighbours',$scope.arduino_elems);		}
 	});
 	//Grafica los sensores correspondientes a cada los arduinos
 	function drawGraphics(){
@@ -62,11 +64,7 @@ app.controller("socketsController",function($scope){
 
 	$scope.sendAttack = function(){
 		console.log($scope.members);
-		var data = {
-			servers: $scope.members,
-			arduinos: $scope.arduino_elems
-		};
-		socket.emit('attacker', data);
+		socket.emit('attack', $scope.members);
 	}
 
 	//Actualiza los valores de los sensores de un arduino en especifico
