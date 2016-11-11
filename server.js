@@ -35,6 +35,11 @@ io.on('connection', function(socket) {
         console.log(list_neighbours);
         io.sockets.emit('arduinos', list_neighbours);
     });
+    socket.on('remove',function(data){
+        console.log("REMOVE");
+        console.log(data);
+        io.sockets.emit('removeLead',data);
+    });
 });
 
 app.post('/', function (request, response) {

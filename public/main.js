@@ -22,7 +22,16 @@ app.controller("socketsController",function($scope){
 			drawGraphics();
 			
 			console.log("send neighbours");
-			socket.emit('neighbours',$scope.arduino_elems);		}
+			socket.emit('neighbours',$scope.arduino_elems);		
+		}
+	});
+	socket.on('removeLead',function(lead){
+		for (var i = $scope.arduino_elems.length - 1; i >= 0; i--) {
+			if($scope.arduino_elems[i].number_process == lead.number_process){
+				$scope.arduino_elems.splice(i,1);
+			}
+		}
+		console.log($scope.arduino_elems);
 	});
 	//Grafica los sensores correspondientes a cada los arduinos
 	function drawGraphics(){
